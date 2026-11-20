@@ -74,3 +74,16 @@ dialog{position:fixed;inset:0;width:100%;height:100%;max-width:none;max-height:n
 .motion-off .scene-photo{opacity:1;transition:none}.motion-off .scene-photo img{transform:none;will-change:auto}
 @media(max-width:800px){.scene-photo img,.s-finish .scene-photo img{width:100%;opacity:.38}.scene-photo:after{background:linear-gradient(90deg,rgba(22,22,22,.83),rgba(22,22,22,.42))}.s-brand .scene-photo img{object-position:63% center}.s-finish .scene-photo img{object-position:55% center}}
 @media print{.scene-photo{opacity:1}.scene-photo img{transform:none}}
+/* Reading-order demonstration: show every passage together; hierarchy does the work. */
+.s-design .canvas{gap:0;justify-content:center}
+.reading-order{position:relative;width:100%;height:min(65vh,660px);min-height:490px}
+.reading-order p,.reading-order h2{margin:0;color:var(--ink);animation:none!important;transition:none!important}
+.reading-primary{position:absolute;left:0;top:5%;font-size:clamp(3.5rem,7vw,7.4rem);line-height:1.23;font-weight:700;letter-spacing:-.035em;white-space:nowrap}
+.reading-primary em,.reading-tertiary em{position:relative;isolation:isolate;font-style:normal}
+.reading-primary em:before,.reading-tertiary em:before{content:"";position:absolute;z-index:-1;inset:62% -.035em 3%;background:var(--lime)}
+.reading-secondary{position:absolute;left:.5%;top:49%;font-size:clamp(1.7rem,2.7vw,2.8rem);line-height:1.45;font-weight:500;letter-spacing:-.025em;white-space:nowrap}
+.reading-tertiary{position:absolute;right:2%;top:63%;width:41%;font-size:clamp(1.35rem,2.1vw,2.25rem);line-height:1.55;font-weight:600;letter-spacing:-.02em}
+.reading-detail{position:absolute;left:1%;top:70%;width:47%;font-size:clamp(.875rem,1.1vw,1.125rem);line-height:1.7;font-weight:400}
+.reading-last{position:absolute;right:0;top:0;font-size:.875rem;line-height:1.5;font-weight:400}
+@media(max-width:800px){.reading-order{height:min(75svh,580px);min-height:0}.reading-primary{top:8%;font-size:clamp(2.25rem,11.1vw,5rem);letter-spacing:-.04em}.reading-secondary{top:40%;font-size:clamp(1.125rem,4.8vw,1.7rem);letter-spacing:-.03em}.reading-tertiary{right:0;top:54%;width:55%;font-size:clamp(1rem,4.5vw,1.35rem);line-height:1.6;letter-spacing:-.035em}.reading-detail{left:0;top:60%;width:40%;font-size:.78125rem;line-height:1.6}.reading-last{font-size:.75rem;top:0}}
+@media(max-height:580px) and (max-width:950px){.reading-order{height:520px}.reading-primary{font-size:clamp(3rem,9vw,4rem)}.reading-secondary{font-size:1.65rem}.reading-tertiary{font-size:1.3rem}.reading-detail{font-size:.875rem}}

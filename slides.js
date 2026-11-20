@@ -25,7 +25,7 @@ export const slides = [
 {id:'motivation',chapter:'mind',kind:'motivation',theme:'paper',title:'人が動く、\n内側と外側。',groups:[['欲求',['一次欲求','深層心理']],['動機',['内発的動機','外発的動機']]],source:['5-5','5-6']},
 {id:'psychology',chapter:'mind',kind:'psychology',theme:'paper',title:'相手に使う。\n自分を守る。',groups:[['相手に使う',['ウィンザー','カリギュラ','ハロー','ダブルバインド','ラポール形成','ドアインザフェイス','同調、縛り']],['自分を守る',['コンコルド','認知的不協和の解消','生存者バイアス']]],source:['6-1','6-2']},
 {id:'numbers',chapter:'expression',kind:'numbers',theme:'dark',title:'数字は、嘘をつかない。',sub:'やりすぎると胡散臭い。相手と場面で使い分ける。',source:['7-1']},
-{id:'design',chapter:'expression',kind:'design',theme:'paper',title:'言葉と、見せ方。',items:['余白','色統制','視線誘導Z'],source:['7-3','7-4']},
+{id:'design',chapter:'expression',kind:'design',theme:'paper',title:'視線誘導の実演',items:['余白','色統制','視線誘導Z'],source:['7-3','7-4']},
 {id:'offer',chapter:'expression',kind:'offer',theme:'lime',title:'選ぶ理由を、つくる。',items:['価格','特典','保証','限定'],source:['7-5']},
 {id:'lp',chapter:'expression',kind:'lp',theme:'paper',title:'LPは、読む順番まで。',items:['FVキャッチ','自分ごと化 / BA','ネガ / 否定・救済','明るい未来 / ベネフィット','根拠 / 信頼 / 権威','実績','他の人も / 成功事例インタビュー','限定 / 時間 / 焦燥'],source:['7-6']},
 {id:'video',chapter:'expression',kind:'video',theme:'dark',title:'最初の、ひと言。',items:['冒頭一言','本編','CTA'],source:['7-7']},

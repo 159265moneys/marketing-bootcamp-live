@@ -1,4 +1,4 @@
-import {slides, chapters} from './slides.js';
+import {slides, chapters} from './slides.js?v=reading-order';
 
 const esc = value => String(value ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const br = value => esc(value).replaceAll('\n','<br>');
@@ -35,7 +35,7 @@ function content(s) {
  case 'motivation':return `${title(s)}<div class="motive-lines">${s.groups.map((g,i)=>`<div><small>${esc(g[0])}</small><strong>${esc(g[1][0])}</strong><span class="motive-line" aria-hidden="true"></span><strong>${esc(g[1][1])}</strong></div>`).join('')}</div>`;
  case 'psychology':return `${title(s)}${groups(s,'psychology-columns')}`;
  case 'numbers':return `${title(s)}<div class="number-stage"><div><strong>95<span class="decimal">.1</span></strong><em>%</em><small>表現例：お客様満足度</small></div><aside><span><b>489</b>対象者数の見せ方</span><span><b>209%</b>UPという表現</span></aside></div>${sub(s)}`;
- case 'design':return `${title(s)}<div class="spacing-stage"><div class="spacing-paper" id="spacing-paper"><span>余白が、</span><span>視線をつくる。</span><small>COPY & DESIGN</small></div><div class="spacing-controls"><label for="space-range">余白<input type="range" id="space-range" min="0" max="100" value="55"></label>${items(s.items.slice(1))}</div></div>`;
+ case 'design':return `<div class="reading-order"><h2 class="reading-primary">あなたは<br><em>まずこれを読む</em></h2><p class="reading-secondary">そして次にこの行を読む</p><p class="reading-tertiary">そしておそらく<br>左の文章を読む前に<br><em>この文章を読む</em></p><p class="reading-detail">このあたりに文章を書いて、細かく説明をつけたとしてもおそらく大半の人は小さいフォントで長い文章が書かれていても読むことはなく、興味があるときにだけ読む。</p><p class="reading-last">最後にここを読む</p></div>`;
  case 'offer':return `${title(s)}<div class="offer-type">${s.items.map((v,i)=>`<span style="--i:${i}">${v}</span>`).join('')}</div>`;
  case 'lp':return `${title(s)}${sequence(s.items,'lp-flow')}`;
  case 'video':return `${title(s)}<div class="video-strip">${s.items.map((v,i)=>`<div style="--i:${i}"><span class="film-index">0${i+1}</span><strong>${v}</strong><i></i></div>`).join('')}</div>`;
@@ -197,10 +197,6 @@ window.addEventListener('hashchange',()=>{const index=slides.findIndex(s=>s.id==
 let resizeTimer;
 window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>goTo(Math.max(activeIndex,0),{instant:true,announce:false}),120);});
 
-document.querySelector('#space-range').addEventListener('input',event=>{
- const v=Number(event.target.value);const paper=document.querySelector('#spacing-paper');
- paper.style.setProperty('--space',v/100);event.target.setAttribute('aria-valuetext',`${v}%`);
-});
 document.querySelector('#ba-range').addEventListener('input',event=>{
  document.querySelector('.ba-comparison').style.setProperty('--reveal',`${event.target.value}%`);
 });
