@@ -8,6 +8,8 @@ const sub = s => s.sub ? `<p class="takeaway reveal">${esc(s.sub)}</p>` : '';
 const groups = (s,cls='') => `<div class="groups ${cls}">${s.groups.map((g,i)=>`<section class="group reveal" style="--i:${i}"><h3>${esc(g[0])}</h3>${Array.isArray(g[1])?items(g[1]):`<p>${br(g[1])}</p>`}${g[2]?`<small>${esc(g[2])}</small>`:''}</section>`).join('')}</div>`;
 const sequence = (values,cls='') => `<ol class="sequence ${cls}">${values.map((v,i)=>`<li class="reveal" style="--i:${i}"><span class="step-number">${String(i+1).padStart(2,'0')}</span><span>${esc(v)}</span></li>`).join('')}</ol>`;
 const ticker = (values,cls='') => `<div class="ticker ${cls}" aria-hidden="true"><div>${[...values,...values].map(v=>`<span>${esc(v)}</span>`).join('')}</div></div>`;
+const photoBackgrounds={brand:'flag',finish:'stairs'};
+const photoBackground=s=>photoBackgrounds[s.kind]?`<div class="scene-photo" aria-hidden="true"><img src="./assets/${photoBackgrounds[s.kind]}.webp" alt="" width="512" height="512" loading="lazy" decoding="async"></div>`:'';
 
 function content(s) {
  switch(s.kind){
@@ -18,7 +20,7 @@ function content(s) {
  case 'organic':return `${title(s)}${groups(s,'organic-columns')}<div class="running-rule" aria-hidden="true"></div>`;
  case 'crm':return `<div class="big-acronym reveal">CRM</div>${title(s)}<div class="crm-loop" aria-hidden="true"><span>接点</span><span>会話</span><span>継続</span><i></i></div>${items(s.items,'inline-tools')}`;
  case 'advertising':return `${title(s)}${groups(s,'ad-columns')}${ticker(['META','TikTok','X','TVer','DISPLAY','SEARCH'],'ad-ticker')}`;
- case 'brand':return `<div class="echo-type" aria-hidden="true"><span>記憶</span><span>記憶</span><span>記憶</span></div>${title(s)}${items(s.items,'brand-list')}`;
+ case 'brand':return `${title(s)}${items(s.items,'brand-list')}`;
  case 'metrics':return `${title(s)}${groups(s,'metric-columns')}${sub(s)}`;
  case 'funnel':return `${title(s)}<div class="funnel">${s.items.map((v,i)=>`<div class="funnel-band" style="--i:${i};--band:${100-i*18}%"><span>${v}</span><i aria-hidden="true"></i></div>`).join('')}</div>${sub(s)}`;
  case 'economics':return `${title(s)}<div class="economic-terms">${s.groups.map((g,i)=>`<div class="reveal" style="--i:${i}"><strong>${esc(g[0])}</strong><span>${esc(g[1])}</span></div>`).join('')}</div>`;
@@ -54,14 +56,15 @@ function content(s) {
  case 'making':return `${title(s)}<div class="making-network">${s.items.map((v,i)=>`<span style="--i:${i}">${esc(v)}</span>`).join('')}<div class="making-line" aria-hidden="true"></div></div>${sub(s)}`;
  case 'deployment':return `${title(s)}${groups(s,'deployment-pair')}`;
  case 'measurement':return `${title(s)}${groups(s,'measurement-pair')}`;
- case 'finish':return `<div class="finish-track" aria-hidden="true">${Array.from({length:10},(_,i)=>`<i style="--i:${i}"></i>`).join('')}</div><h2 class="finish-title reveal">明日、<br><em>回す。</em></h2>${items(s.items,'finish-points')}${sub(s)}<button class="back-start" data-go="cover">最初へ</button>`;
+ case 'finish':return `<h2 class="finish-title reveal">明日、<br><em>回す。</em></h2>${items(s.items,'finish-points')}${sub(s)}<button class="back-start" data-go="cover">最初へ</button>`;
  default:return `${title(s)}${sub(s)}`;
  }
 }
 
 const deck=document.querySelector('#deck');
-deck.innerHTML=slides.map((s,i)=>`<section class="slide s-${s.kind} theme-${s.theme}" id="${s.id}" aria-label="${i+1} / ${slides.length} ${esc(s.title.replaceAll('\n',''))}" data-index="${i}" data-theme="${s.theme}"><div class="canvas">${content(s)}</div></section>`).join('');
+deck.innerHTML=slides.map((s,i)=>`<section class="slide s-${s.kind} theme-${s.theme}" id="${s.id}" aria-label="${i+1} / ${slides.length} ${esc(s.title.replaceAll('\n',''))}" data-index="${i}" data-theme="${s.theme}">${photoBackground(s)}<div class="canvas">${content(s)}</div></section>`).join('');
 const sections=[...deck.querySelectorAll('.slide')];
+const photoSections=sections.filter(section=>section.querySelector('.scene-photo'));
 sections.forEach(section=>{section.inert=true;});
 const dialog=document.querySelector('#index-dialog');
 const chapterOrder=Object.keys(chapters);
@@ -135,6 +138,10 @@ deck.addEventListener('scroll',()=>{
  if(ticking)return;ticking=true;
  requestAnimationFrame(()=>{
    const index=nearestIndex();activate(index);
+   for(const section of photoSections){
+     const progress=Math.max(-1,Math.min(1,(deck.scrollTop-section.offsetTop)/section.offsetHeight));
+     section.style.setProperty('--photo-shift',`${motion?progress*26:0}px`);
+   }
    if(pendingAnnouncement!==null&&Math.abs(deck.scrollTop-sections[pendingAnnouncement].offsetTop)<2){
      activate(pendingAnnouncement,true);pendingAnnouncement=null;
    }

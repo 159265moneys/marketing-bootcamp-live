@@ -64,3 +64,13 @@ dialog{position:fixed;inset:0;width:100%;height:100%;max-width:none;max-height:n
 @media print{html,body{overflow:visible;height:auto}.chrome,.progress-track,dialog,.type-wheel,.hero-baseline,.back-start{display:none!important}.deck{height:auto;overflow:visible}.slide{height:190mm;min-height:0;break-after:page;print-color-adjust:exact;-webkit-print-color-adjust:exact}.canvas{padding-block:20mm}.reveal{opacity:1;transform:none}.slide *,.slide *::before,.slide *::after{animation:none!important}.takeaway{font-size:12pt}}
 @media(max-width:480px){.service-route .route-label>span{display:block;line-height:1.55}}
 .chrome{transition:none}
+/* Reused monochrome photographs sit behind the content, only on two dark scenes. */
+.scene-photo{position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none;opacity:0;transition:opacity 1.1s ease}
+.is-active>.scene-photo{opacity:1}
+.scene-photo img{position:absolute;right:0;top:0;width:66%;height:100%;object-fit:cover;object-position:center;opacity:.68;transform:translate3d(0,var(--photo-shift,0px),0) scale(1.1);will-change:transform}
+.scene-photo:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#161616 17%,rgba(22,22,22,.94)37%,rgba(22,22,22,.42)72%,rgba(22,22,22,.25))}
+.s-brand .scene-photo img{object-position:58% center}
+.s-finish .scene-photo img{width:68%;opacity:.62;object-position:center 48%}
+.motion-off .scene-photo{opacity:1;transition:none}.motion-off .scene-photo img{transform:none;will-change:auto}
+@media(max-width:800px){.scene-photo img,.s-finish .scene-photo img{width:100%;opacity:.38}.scene-photo:after{background:linear-gradient(90deg,rgba(22,22,22,.83),rgba(22,22,22,.42))}.s-brand .scene-photo img{object-position:63% center}.s-finish .scene-photo img{object-position:55% center}}
+@media print{.scene-photo{opacity:1}.scene-photo img{transform:none}}
