@@ -37,7 +37,11 @@ git push origin main
 
 commitはローカルの履歴への記録、pushはリモートへの送信です。Pagesで公開元を設定してから、pushされた変更が公開サイトへ反映されます。初回のremote設定や、他の人の更新の取り込みは別の作業です。
 
+`.env`などは`git add`する前に`.gitignore`へ追加します。すでに追跡しているファイルは、`.gitignore`に書くだけでは追跡対象から外れません。
+
 講義内の数値（95.1%、489人、209%UP）は元原稿の表現例です。ファネルの帯幅は概念を示し、実測データではありません。Git操作画面は学習用のシミュレーションであり、訪問者のリポジトリを操作しません。
+
+顧客1人あたりの採算を説明するページでは、LTVを利益ベースで扱います。Node.jsはJavaScriptの実行環境、Next.jsはWebアプリのフレームワーク、FTPはファイル転送の用語として分類しています。caffeinateはMacのスリープ防止コマンドです。
 
 ## 参照
 
@@ -45,5 +49,18 @@ commitはローカルの履歴への記録、pushはリモートへの送信で�
 - [Git: Working with Remotes](https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes)
 - [GitHub: About repositories](https://docs.github.com/en/repositories/creating-and-managing-repositories/about-repositories)
 - [GitHub Pages: Publishing source](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site)
+- [Git: gitignore](https://git-scm.com/docs/gitignore)
+- [Node.js: Introduction](https://nodejs.org/learn/getting-started/introduction-to-nodejs)
+- [Next.js: Documentation](https://nextjs.org/docs)
 
-デザイン評価では、意味のない抽象3D、定型ヒーロー、グラデーション、均一なカードの反復、説明のない余白、装飾だけの動きを確認対象にしています。
+## 評価基準
+
+見た目だけでなく、次の5項目をそれぞれ10点満点で評価します。
+
+1. AI定型デザインの回避：汎用ヒーロー、意味のない抽象3D、均一なカードの反復を避けているか。
+2. 視認性：文字サイズ・改行・コントラスト・操作の優先順位が適切か。
+3. 動き：アニメーションや3Dが、内容や操作を理解する助けになっているか。
+4. 完成度：レイアウト・文章・動作が整合しているか。
+5. **コピーの具体性・自然さ・非AI定型性**：対象と作業が分かるか、原稿の意味を変えていないか。演出用の読点、汎用的な煽り、不自然な比喩、不要な英語で説明を置き換えていないか。
+
+意味が通らない見出しや、原稿の趣旨を逆転させた要約は、見た目の評価が高くても修正対象です。本人の原稿にある強い口調と、AIが足した意味の薄いスローガンは区別します。視線誘導の実演文はユーザー指定の教材として保持します。

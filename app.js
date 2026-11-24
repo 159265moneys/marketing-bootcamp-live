@@ -1,25 +1,27 @@
-import {slides, chapters} from './slides.js?v=reading-order';
+import {slides, chapters} from './slides.js?v=copy-20261124';
 
 const esc = value => String(value ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const br = value => esc(value).replaceAll('\n','<br>');
 const items = (values, cls='') => `<ul class="${cls}">${values.map((v,i)=>`<li style="--i:${i}">${esc(v)}</li>`).join('')}</ul>`;
 const title = s => `<h2 class="title reveal">${br(s.title)}</h2>`;
-const sub = s => s.sub ? `<p class="takeaway reveal">${esc(s.sub)}</p>` : '';
+const sub = s => s.sub ? `<p class="takeaway reveal">${br(s.sub)}</p>` : '';
 const groups = (s,cls='') => `<div class="groups ${cls}">${s.groups.map((g,i)=>`<section class="group reveal" style="--i:${i}"><h3>${esc(g[0])}</h3>${Array.isArray(g[1])?items(g[1]):`<p>${br(g[1])}</p>`}${g[2]?`<small>${esc(g[2])}</small>`:''}</section>`).join('')}</div>`;
 const sequence = (values,cls='') => `<ol class="sequence ${cls}">${values.map((v,i)=>`<li class="reveal" style="--i:${i}"><span class="step-number">${String(i+1).padStart(2,'0')}</span><span>${esc(v)}</span></li>`).join('')}</ol>`;
 const ticker = (values,cls='') => `<div class="ticker ${cls}" aria-hidden="true"><div>${[...values,...values].map(v=>`<span>${esc(v)}</span>`).join('')}</div></div>`;
 const photoBackgrounds={brand:'flag',finish:'stairs'};
 const photoBackground=s=>photoBackgrounds[s.kind]?`<div class="scene-photo" aria-hidden="true"><img src="./assets/${photoBackgrounds[s.kind]}.webp" alt="" width="512" height="512" loading="lazy" decoding="async"></div>`:'';
+const coverCopy=slides.find(s=>s.id==='cover');
+const headlineMarkup=lines=>lines.map((line,i)=>i===lines.length-1?`<em>${esc(line)}</em>`:esc(line)).join('<br>');
 
 function content(s) {
  switch(s.kind){
- case 'hero':return `<div class="hero-copy"><p class="overline reveal">実践するための、マーケ合宿。</p><h1 class="hero-title"><span class="reveal">マーケを、</span><span class="reveal">手で<em>動</em>かせ。</span></h1><p class="hero-sub reveal">${esc(s.sub)}</p></div><div class="type-wheel" aria-hidden="true"><div class="type-rotor">${['認知','設計','思考','表現','実装','運用'].map((v,i)=>`<span style="--face:${i}">${v}</span>`).join('')}</div></div><div class="hero-baseline"><span>知って終わりじゃ、意味がない。</span><span class="scroll-cue">SCROLL</span></div>`;
- case 'goal':return `${title(s)}<div class="goal-word" aria-hidden="true">明日。</div>${sequence(s.items,'goal-steps')}`;
+ case 'hero':return `<div class="hero-copy"><p class="overline reveal">${esc(s.eyebrow)}</p><h1 class="hero-title">${s.headline.map((line,i)=>`<span class="reveal">${i===s.headline.length-1?`<em>${esc(line)}</em>`:esc(line)}</span>`).join('')}</h1><p class="hero-sub reveal">${esc(s.sub)}</p></div><div class="type-wheel" aria-hidden="true"><div class="type-rotor">${['認知','設計','思考','表現','実装','運用'].map((v,i)=>`<span style="--face:${i}">${v}</span>`).join('')}</div></div><div class="hero-baseline"><span>${esc(s.baseline)}</span><span class="scroll-cue">SCROLL</span></div>`;
+ case 'goal':return `${title(s)}${sequence(s.items,'goal-steps')}`;
  case 'contents':return `${title(s)}<div class="chapter-links">${s.items.map((v,i)=>`<button data-go="${['channels','concept','numbers','web','before-after'][i]}"><span>${v}</span><span class="chapter-range">${['全体像 / 用語 / 上流設計','思考法 / ターゲット / 心理学','数字 / コピー / デザイン','技術 / Git / AI','訴求100本 / サービス立ち上げ'][i]}</span></button>`).join('')}</div>`;
  case 'channels':return `${title(s)}<div class="channel-constellation">${s.items.map((v,i)=>`<span class="channel-label" style="--i:${i}">${esc(v)}</span>`).join('')}</div>`;
  case 'organic':return `${title(s)}${groups(s,'organic-columns')}<div class="running-rule" aria-hidden="true"></div>`;
  case 'crm':return `<div class="big-acronym reveal">CRM</div>${title(s)}<div class="crm-loop" aria-hidden="true"><span>接点</span><span>会話</span><span>継続</span><i></i></div>${items(s.items,'inline-tools')}`;
- case 'advertising':return `${title(s)}${groups(s,'ad-columns')}${ticker(['META','TikTok','X','TVer','DISPLAY','SEARCH'],'ad-ticker')}`;
+ case 'advertising':return `${title(s)}${groups(s,'ad-columns')}${ticker(['Meta','TikTok','X','TVer','ディスプレイ','リスティング'],'ad-ticker')}`;
  case 'brand':return `${title(s)}${items(s.items,'brand-list')}`;
  case 'metrics':return `${title(s)}${groups(s,'metric-columns')}${sub(s)}`;
  case 'funnel':return `${title(s)}<div class="funnel">${s.items.map((v,i)=>`<div class="funnel-band" style="--i:${i};--band:${100-i*18}%"><span>${v}</span><i aria-hidden="true"></i></div>`).join('')}</div>${sub(s)}`;
@@ -29,34 +31,34 @@ function content(s) {
  case 'why':return `<div class="why-heading"><h2>${esc(s.title)}</h2><span>×3</span></div><div class="why-steps">${s.groups.map((g,i)=>`<div class="reveal" style="--i:${i}"><strong>${esc(g[0])}</strong><p>${esc(g[1])}</p></div>`).join('')}</div>${sub(s)}`;
  case 'curiosity':return `${title(s)}<div class="expanding-circle" aria-hidden="true"><i></i><i></i><i></i></div>${groups(s,'curiosity-columns')}${sub(s)}`;
  case 'thinking':return `${title(s)}${groups(s,'thinking-flow')}${sub(s)}`;
- case 'literacy':return `<div class="reading-number" aria-hidden="true">3</div><div class="reading-copy"><h2 class="title reveal"><span class="sr-only">3</span>${br(s.title)}</h2>${sub(s)}${items(s.items,'literacy-tools')}</div>`;
+ case 'literacy':return `<div class="reading-number" aria-hidden="true">3</div><div class="reading-copy"><h2 class="title reveal"><span class="sr-only">3</span>${br(s.title.replace(/^3/,''))}</h2>${sub(s)}${items(s.items,'literacy-tools')}</div>`;
  case 'triggers':return `${title(s)}<p class="subline">${esc(s.sub)}</p>${groups(s,'trigger-pair')}`;
- case 'decisions':return `<h2 class="sr-only">${esc(s.title)}</h2><div class="decision-halves">${s.groups.map((g,i)=>`<section><span class="decision-label">${g[0]}</span><h3>${esc(g[1])}</h3>${items(g[2])}<div class="decision-track" aria-hidden="true"><i></i></div></section>`).join('')}</div>`;
+ case 'decisions':return `<h2 class="sr-only">${esc(s.title)}</h2><div class="decision-halves">${s.groups.map((g,i)=>`<section><span class="decision-label">${g[0]}</span><h3>${br(g[1])}</h3>${items(g[2])}<div class="decision-track" aria-hidden="true"><i></i></div></section>`).join('')}</div>`;
  case 'motivation':return `${title(s)}<div class="motive-lines">${s.groups.map((g,i)=>`<div><small>${esc(g[0])}</small><strong>${esc(g[1][0])}</strong><span class="motive-line" aria-hidden="true"></span><strong>${esc(g[1][1])}</strong></div>`).join('')}</div>`;
  case 'psychology':return `${title(s)}${groups(s,'psychology-columns')}`;
- case 'numbers':return `${title(s)}<div class="number-stage"><div><strong>95<span class="decimal">.1</span></strong><em>%</em><small>表現例：お客様満足度</small></div><aside><span><b>489</b>対象者数の見せ方</span><span><b>209%</b>UPという表現</span></aside></div>${sub(s)}`;
+ case 'numbers':return `${title(s)}<div class="number-stage"><div><strong>95<span class="decimal">.1</span></strong><em>%</em><small>表現例：お客様満足度</small></div><aside><span><b>489</b>調査対象者数（人）</span><span><b>209%</b>増加率の表現例</span></aside></div>${sub(s)}`;
  case 'design':return `<div class="reading-order"><h2 class="reading-primary">あなたは<br><em>まずこれを読む</em></h2><p class="reading-secondary">そして次にこの行を読む</p><p class="reading-tertiary">そしておそらく<br>左の文章を読む前に<br><em>この文章を読む</em></p><p class="reading-detail">このあたりに文章を書いて、細かく説明をつけたとしてもおそらく大半の人は小さいフォントで長い文章が書かれていても読むことはなく、興味があるときにだけ読む。</p><p class="reading-last">最後にここを読む</p></div>`;
  case 'offer':return `${title(s)}<div class="offer-type">${s.items.map((v,i)=>`<span style="--i:${i}">${v}</span>`).join('')}</div>`;
  case 'lp':return `${title(s)}${sequence(s.items,'lp-flow')}`;
  case 'video':return `${title(s)}<div class="video-strip">${s.items.map((v,i)=>`<div style="--i:${i}"><span class="film-index">0${i+1}</span><strong>${v}</strong><i></i></div>`).join('')}</div>`;
  case 'rules':return `${title(s)}${items(s.items,'rule-types')}`;
- case 'web':return `${title(s)}<div class="web-stack">${s.groups.map((g,i)=>`<div style="--i:${i}"><strong>${esc(g[0])}</strong><span>${esc(g[1])}</span><i aria-hidden="true"></i></div>`).join('')}</div>${sub(s)}`;
+ case 'web':return `${title(s)}<div class="web-stack">${s.groups.map((g,i)=>`<div style="--i:${i}"><strong>${g[2]?g[2].map(part=>`<span class="web-term">${esc(part)}</span>`).join('<wbr>'):esc(g[0])}</strong><span>${esc(g[1])}</span><i aria-hidden="true"></i></div>`).join('')}</div>${sub(s)}`;
  case 'gitcompare':return `${title(s)}<div class="git-compare">${s.groups.map((g,i)=>`<section><strong>${g[0]}</strong><p>${esc(g[1])}</p><small>${esc(g[2])}</small></section>`).join('')}<span class="git-transfer" aria-hidden="true"></span></div>`;
- case 'repository':return `${title(s)}<div class="repository-stage"><div class="repo-files" aria-label="プロジェクトのファイル構成"><strong>project/</strong><span>index.html</span><span>styles.css</span><span>app.js</span><span class="git-folder">.git/ <small>変更履歴</small></span></div><div class="repo-history"><span>作る</span><span>直す</span><span>育てる</span><i aria-hidden="true"></i></div></div>${sub(s)}`;
+ case 'repository':return `${title(s)}<div class="repository-stage"><div class="repo-files" aria-label="プロジェクトのファイル構成"><strong>project/</strong><span>index.html</span><span>styles.css</span><span>app.js</span><span class="git-folder">.git/ <small>変更履歴</small></span></div><div class="repo-history"><span>初版を作成</span><span>見出しを修正</span><span>機能を追加</span><i aria-hidden="true"></i></div></div>${sub(s)}`;
  case 'gitflow':return `${title(s)}<div class="git-demo" data-state="0"><div class="git-locations"><div class="git-local"><small>自分のPC</small><strong id="git-local-state">変更あり</strong><span class="git-file" aria-hidden="true">index.html</span></div><div class="git-road" aria-hidden="true"><i></i></div><div class="git-remote"><small>GitHub</small><strong id="git-remote-state">更新前</strong></div></div><div class="git-actions"><button data-git="add">git add<span>記録する変更を選ぶ</span></button><button data-git="commit" disabled>git commit<span>ローカルに記録</span></button><button data-git="push" disabled>git push<span>リモートへ送信</span></button><button data-git="reset" class="git-reset">やり直す</button></div><p class="demo-status" id="git-status" aria-live="polite">操作デモ</p></div>`;
- case 'commands':return `${title(s)}<div class="command-list">${[['git status','変更を確認'],['git add index.html styles.css app.js slides.js','記録対象を選ぶ'],['git commit -m "スライドを更新"','変更を記録'],['git push origin main','GitHubへ送信']].map((v,i)=>`<div class="reveal" style="--i:${i}"><code>${esc(v[0])}</code><span>${v[1]}</span></div>`).join('')}</div><p class="takeaway">${esc(s.sub)} <span>.envなどの秘密情報は .gitignore で除外。</span></p>`;
+ case 'commands':return `${title(s)}<div class="command-list">${[['git status','変更を確認'],['git add index.html styles.css app.js slides.js','記録対象を選ぶ'],['git commit -m "スライドを更新"','変更を記録'],['git push origin main','GitHubへ送信']].map((v,i)=>`<div class="reveal" style="--i:${i}"><code>${esc(v[0])}</code><span>${v[1]}</span></div>`).join('')}</div><p class="takeaway">${esc(s.sub)} <span>git addの前に、.envを.gitignoreの除外対象に指定する。</span></p>`;
  case 'pages':return `${title(s)}<div class="publish-flow"><div><strong>PC</strong><span>commit</span></div><i aria-hidden="true"></i><div><strong>GitHub</strong><span>push</span></div><i aria-hidden="true"></i><div><strong>Pages</strong><span>公開</span></div></div>${sub(s)}`;
  case 'security':return `${title(s)}${items(s.items,'security-terms')}<p class="subline">${esc(s.extra)}</p>${sub(s)}`;
  case 'prompt':return `${title(s)}${groups(s,'prompt-flow')}${sub(s)}`;
  case 'research':return `${title(s)}${sequence(s.items,'research-list')}${sub(s)}`;
- case 'ba':return `${title(s)}<div class="ba-comparison"><div class="ba-before"><small>BEFORE</small><strong>マーケ合宿</strong><span>基礎・思考法・実践</span><p>翌日から集客運用開始できるようにしたい</p></div><div class="ba-after"><small>AFTER</small><strong>マーケを、<br><em>手で動かせ。</em></strong><span class="ba-running" aria-hidden="true">THINK　MAKE　LAUNCH　THINK　MAKE　LAUNCH</span></div><div class="ba-divider" aria-hidden="true"></div></div><label class="ba-control" for="ba-range"><span>Before</span><input id="ba-range" type="range" min="0" max="100" value="52" aria-label="BeforeとAfterの比較"><span>After</span></label>`;
+ case 'ba':return `${title(s)}<div class="ba-comparison"><div class="ba-before"><small>BEFORE</small><strong>マーケ合宿</strong><span>基礎・思考法・実践</span><p>翌日から集客運用開始できるようにしたい</p></div><div class="ba-after"><small>AFTER</small><strong>${headlineMarkup(coverCopy.headline)}</strong><p class="ba-after-caption">${esc(coverCopy.sub)}</p></div><div class="ba-divider" aria-hidden="true"></div></div><label class="ba-control" for="ba-range"><span>Before</span><input id="ba-range" type="range" min="0" max="100" value="52" aria-label="BeforeとAfterの比較"><span>After</span></label>`;
  case 'hundred':return `${title(s)}<div class="hundred-layout"><strong class="hundred-number" data-counter="100">100</strong><ul>${s.items.map(v=>`<li><span>${esc(v)}</span><b>20</b></li>`).join('')}</ul></div>`;
  case 'testing':return `${title(s)}${sequence(s.items,'testing-flow')}${sub(s)}`;
  case 'service':return `${title(s)}<div class="service-route">${s.items.map((v,i)=>`<div style="--i:${i}"><span class="route-label"><span>${['市場','競合','サービス'][i]}</span><span>${i===2?'設計':'調査'}</span></span></div>`).join('')}<div class="service-progress" aria-hidden="true"><i></i></div></div>`;
  case 'making':return `${title(s)}<div class="making-network">${s.items.map((v,i)=>`<span style="--i:${i}">${esc(v)}</span>`).join('')}<div class="making-line" aria-hidden="true"></div></div>${sub(s)}`;
  case 'deployment':return `${title(s)}${groups(s,'deployment-pair')}`;
  case 'measurement':return `${title(s)}${groups(s,'measurement-pair')}`;
- case 'finish':return `<h2 class="finish-title reveal">明日、<br><em>回す。</em></h2>${items(s.items,'finish-points')}${sub(s)}<button class="back-start" data-go="cover">最初へ</button>`;
+ case 'finish':return `<h2 class="finish-title reveal">${headlineMarkup(s.title.split('\n'))}</h2>${items(s.items,'finish-points')}${sub(s)}<button class="back-start" data-go="cover">最初へ</button>`;
  default:return `${title(s)}${sub(s)}`;
  }
 }
