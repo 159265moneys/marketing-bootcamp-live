@@ -1,4 +1,4 @@
-import {slides, chapters} from './slides.js?v=copy-20261124';
+import {slides, chapters} from './slides.js?v=style-copy-20261124';
 
 const esc = value => String(value ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const br = value => esc(value).replaceAll('\n','<br>');
@@ -38,7 +38,7 @@ function content(s) {
  case 'psychology':return `${title(s)}${groups(s,'psychology-columns')}`;
  case 'numbers':return `${title(s)}<div class="number-stage"><div><strong>95<span class="decimal">.1</span></strong><em>%</em><small>表現例：お客様満足度</small></div><aside><span><b>489</b>調査対象者数（人）</span><span><b>209%</b>増加率の表現例</span></aside></div>${sub(s)}`;
  case 'design':return `<div class="reading-order"><h2 class="reading-primary">あなたは<br><em>まずこれを読む</em></h2><p class="reading-secondary">そして次にこの行を読む</p><p class="reading-tertiary">そしておそらく<br>左の文章を読む前に<br><em>この文章を読む</em></p><p class="reading-detail">このあたりに文章を書いて、細かく説明をつけたとしてもおそらく大半の人は小さいフォントで長い文章が書かれていても読むことはなく、興味があるときにだけ読む。</p><p class="reading-last">最後にここを読む</p></div>`;
- case 'offer':return `${title(s)}<div class="offer-type">${s.items.map((v,i)=>`<span style="--i:${i}">${v}</span>`).join('')}</div>`;
+ case 'offer':return `<p class="lesson-label">${esc(s.topic)}</p>${title(s)}<div class="offer-type">${s.items.map((v,i)=>`<span style="--i:${i}">${v}</span>`).join('')}</div>`;
  case 'lp':return `${title(s)}${sequence(s.items,'lp-flow')}`;
  case 'video':return `${title(s)}<div class="video-strip">${s.items.map((v,i)=>`<div style="--i:${i}"><span class="film-index">0${i+1}</span><strong>${v}</strong><i></i></div>`).join('')}</div>`;
  case 'rules':return `${title(s)}${items(s.items,'rule-types')}`;
@@ -58,7 +58,7 @@ function content(s) {
  case 'making':return `${title(s)}<div class="making-network">${s.items.map((v,i)=>`<span style="--i:${i}">${esc(v)}</span>`).join('')}<div class="making-line" aria-hidden="true"></div></div>${sub(s)}`;
  case 'deployment':return `${title(s)}${groups(s,'deployment-pair')}`;
  case 'measurement':return `${title(s)}${groups(s,'measurement-pair')}`;
- case 'finish':return `<h2 class="finish-title reveal">${headlineMarkup(s.title.split('\n'))}</h2>${items(s.items,'finish-points')}${sub(s)}<button class="back-start" data-go="cover">最初へ</button>`;
+ case 'finish':return `<p class="lesson-label">${esc(s.eyebrow)}</p><h2 class="finish-title reveal">${headlineMarkup(s.title.split('\n'))}</h2>${items(s.items,'finish-points')}${sub(s)}<button class="back-start" data-go="cover">最初へ</button>`;
  default:return `${title(s)}${sub(s)}`;
  }
 }

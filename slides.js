@@ -14,13 +14,13 @@ export const slides = [
     "kind": "hero",
     "theme": "paper",
     "title": "マーケ合宿",
-    "sub": "サービスを作って、翌日から集客を始める。",
+    "sub": "サービス設計からHP制作、計測・広告配信の準備まで。",
     "headline": [
-      "マーケ",
-      "合宿"
+      "売り方まで、",
+      "つくる。"
     ],
     "eyebrow": "市場調査・サービス設計・AI制作",
-    "baseline": "HP・決済・LINE・CRMまで作る"
+    "baseline": "HP / 決済 / LINE / CRM"
   },
   {
     "id": "goal",
@@ -219,7 +219,7 @@ export const slides = [
     "chapter": "landscape",
     "kind": "economics",
     "theme": "dark",
-    "title": "顧客1人あたりの採算",
+    "title": "客1人の獲得に、\nいくら使える？",
     "groups": [
       [
         "LTV",
@@ -247,7 +247,7 @@ export const slides = [
     "chapter": "landscape",
     "kind": "planning",
     "theme": "paper",
-    "title": "施策の\n実行計画",
+    "title": "その施策、\n担当と期限は？",
     "groups": [
       [
         "条件",
@@ -337,7 +337,7 @@ export const slides = [
     "chapter": "mind",
     "kind": "thinking",
     "theme": "paper",
-    "title": "結論には\n理由をつける",
+    "title": "その結論、\n理由は言える？",
     "groups": [
       [
         "判断",
@@ -490,7 +490,7 @@ export const slides = [
     "chapter": "expression",
     "kind": "numbers",
     "theme": "dark",
-    "title": "数字の見せ方",
+    "title": "その数字、\nなぜ信じる？",
     "sub": "数字は嘘をつかないが、嘘つきは数字を使う。やりすぎると胡散臭い。",
     "source": [
       "7-1"
@@ -517,7 +517,7 @@ export const slides = [
     "chapter": "expression",
     "kind": "offer",
     "theme": "lime",
-    "title": "オファー設計",
+    "title": "その条件で、\n客は買うか？",
     "items": [
       "価格",
       "特典",
@@ -526,7 +526,8 @@ export const slides = [
     ],
     "source": [
       "7-5"
-    ]
+    ],
+    "topic": "オファー設計"
   },
   {
     "id": "lp",
@@ -708,7 +709,7 @@ export const slides = [
     "chapter": "technology",
     "kind": "prompt",
     "theme": "paper",
-    "title": "AIへの指示と修正",
+    "title": "「いい感じ」って、\nどこをどう直すの？",
     "groups": [
       [
         "指示",
@@ -723,7 +724,7 @@ export const slides = [
         "変える箇所と直し方を書く"
       ]
     ],
-    "sub": "「いい感じにして」では、何を直すか伝わらない。",
+    "sub": "AIに、作りたいものと修正箇所を具体的に伝える。",
     "source": [
       "9-1"
     ]
@@ -777,7 +778,7 @@ export const slides = [
     "chapter": "practice",
     "kind": "testing",
     "theme": "paper",
-    "title": "訴求の講評と効果検証",
+    "title": "1回のテストで、\n変えるのは1つ。",
     "items": [
       "仮説",
       "1変数テスト",
@@ -809,7 +810,7 @@ export const slides = [
     "chapter": "practice",
     "kind": "making",
     "theme": "dark",
-    "title": "HPからCRMまで\nAIで作る",
+    "title": "HPからCRMまで、\nAIでつくり切る。",
     "items": [
       "HP",
       "決済",
@@ -883,7 +884,7 @@ export const slides = [
     "chapter": "practice",
     "kind": "finish",
     "theme": "dark",
-    "title": "翌日から\n集客運用を始める",
+    "title": "公開は今日。\n集客は明日。",
     "items": [
       "毎日見る数字",
       "異常値の判断"
@@ -892,6 +893,7 @@ export const slides = [
     "source": [
       "11-7",
       "11-8"
-    ]
+    ],
+    "eyebrow": "合宿のゴール"
   }
 ];
